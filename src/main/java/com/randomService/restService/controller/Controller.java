@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/iller")
+@RequestMapping("/sehirler")
 public class Controller {
 
     @Autowired
@@ -23,9 +23,15 @@ public class Controller {
     @Autowired
     private RestTemplate restTemplate;
 
+    // bütün şehirleri listeler
     @GetMapping
     List<Sehir> getSehir(){
         return sehirService.getService();
+    }
+    //id ye göre 1 şehir listeler
+    @GetMapping("/{id}")
+    public Sehir getSehirById(@PathVariable Long id) {
+        return sehirService.getSehirById(id);
     }
 
     //Dışarıdan bir servise istek atıp dönen verileri görüntüleme

@@ -1,32 +1,39 @@
 package com.randomService.restService.service;
 
 import com.randomService.restService.entity.Sehir;
-import com.randomService.restService.repository.UserRepository;
+import com.randomService.restService.repository.SehirRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SehirService {
     @Autowired
-    UserRepository userRepository;
+    SehirRepository sehirRepository;
 
 
     public List<Sehir> getService() {
-        return userRepository.findAll();
+        return sehirRepository.findAll();
     }
+    
 
     public Sehir addSehir(Sehir sehir) {
-        return userRepository.save(sehir);
+        return sehirRepository.save(sehir);
     }
 
     public boolean deleteSehirById(Long id) {
-        if(userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+        if(sehirRepository.existsById(id)) {
+            sehirRepository.deleteById(id);
             return true;
         } else {
             return false;
         }
+    }
+
+    public Sehir getSehirById(Long id) {
+        Optional<Sehir> sehirOptional = sehirRepository.findById(id);
+        return sehirOptional.orElse(null);
     }
 }
