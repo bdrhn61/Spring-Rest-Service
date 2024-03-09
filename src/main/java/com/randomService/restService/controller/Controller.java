@@ -42,8 +42,8 @@ public class Controller {
         return response.getBody();
     }
     // Veri tabanına veri ekleme
-    // curl -X POST -H "Content-Type: application/json" --data-binary "{\"name\": \"İl Adı\"}" http://localhost:8080/iller/products
-    // http://localhost:8080/iller/products    heders   "Content-Type"  Değeri "application/json" olmalıdır.
+    // curl -X POST -H "Content-Type: application/json" --data-binary "{\"name\": \"İl Adı\"}" http://localhost:8080/sehirler/products
+    // http://localhost:8080/sehirler/products    heders   "Content-Type"  Değeri "application/json" olmalıdır.
     // body  {
     //    "name": "İstanbul"
     //}
@@ -55,7 +55,7 @@ public class Controller {
 
     //   id ile veri tabanından şehir silmek
     //   http://localhost:8080/iller/sil/5
-    //   curl -X DELETE http://localhost:8080/iller/sil/6
+    //   curl -X DELETE http://localhost:8080/sehirler/sil/6
     @DeleteMapping("/sil/{id}")
     public ResponseEntity<String> deleteSehir(@PathVariable Long id) {
         if(sehirService.deleteSehirById(id)) {
@@ -63,6 +63,13 @@ public class Controller {
         } else {
             return new ResponseEntity<>("Sehir bulunamadı", HttpStatus.NOT_FOUND);
         }
+    }
+
+    // http://localhost:8080/sehirler/degistir/2?yeniSehirAdi=adana
+    // id ile şehir ismini değiştirmek
+    @PutMapping("/degistir/{id}")
+    public Sehir updateSehir(@PathVariable Long id, @RequestParam String yeniSehirAdi) {
+        return sehirService.updateSehir(id, yeniSehirAdi);
     }
 
 //    @GetMapping

@@ -13,6 +13,13 @@ public class Sehir {
 
     @Column(name ="name")
     private String name;
+    @Column(name ="plaka")
+    private String plaka;
+
+    public void setSehir(String sehir) {
+        this.name = sehir;
+    }
+
 
 
 }

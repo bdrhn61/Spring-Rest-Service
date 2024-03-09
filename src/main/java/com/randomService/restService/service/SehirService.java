@@ -36,4 +36,13 @@ public class SehirService {
         Optional<Sehir> sehirOptional = sehirRepository.findById(id);
         return sehirOptional.orElse(null);
     }
+
+    public Sehir updateSehir(Long id, String yeniSehirAdi) {
+        Sehir sehir = sehirRepository.findById(id).orElse(null);
+        if (sehir != null) {
+            sehir.setSehir(yeniSehirAdi);
+            return sehirRepository.save(sehir);
+        }
+        return null; // Eğer verilen id'ye sahip bir şehir bulunamazsa null dönebilirsiniz.
+    }
 }
