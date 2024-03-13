@@ -16,9 +16,13 @@ public class Sehir {
     @Column(name ="plaka")
     private String plaka;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Bolge vicle;
+
     public void setSehir(String sehir) {
         this.name = sehir;
     }
+
 
 
 

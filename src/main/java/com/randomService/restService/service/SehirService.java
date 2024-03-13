@@ -5,6 +5,7 @@ import com.randomService.restService.repository.SehirRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,10 @@ public class SehirService {
 
 
     public List<Sehir> getService() {
-        return sehirRepository.findAll();
+        return sehirRepository.getAllSehir();
+
+
+        //  return sehirRepository.findAll();
     }
     
 
@@ -43,6 +47,6 @@ public class SehirService {
             sehir.setSehir(yeniSehirAdi);
             return sehirRepository.save(sehir);
         }
-        return null; // Eğer verilen id'ye sahip bir şehir bulunamazsa null dönebilirsiniz.
+        return null;
     }
 }
