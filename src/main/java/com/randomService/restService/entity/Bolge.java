@@ -12,8 +12,5 @@ public class Bolge {
     private Long id;
 
     @Column(name ="bolge_adi")
-    private String name;
-
-    @OneToOne(mappedBy = "vicle")
-    private Sehir owner;
+    private String bolgeAdi;
 }

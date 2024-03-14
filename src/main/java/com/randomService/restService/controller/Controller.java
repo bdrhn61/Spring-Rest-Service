@@ -5,6 +5,7 @@ import com.randomService.restService.entity.Sehir;
 
 
 import com.randomService.restService.service.SehirService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +49,24 @@ public class Controller {
     //    "name": "İstanbul"
     //}
     @PostMapping("products")
-    public ResponseEntity<Sehir> addProduct(@RequestBody Sehir sehir) {
-        Sehir newSehir = sehirService.addSehir(sehir);
-        return new ResponseEntity<>(newSehir, HttpStatus.CREATED);
+    public ResponseEntity<?> addProduct(@RequestBody Sehir sehir) {
+        try {
+            Sehir newSehir = sehirService.addSehir(sehir);
+            return new ResponseEntity<>(newSehir, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // Eğer bölge ID girilmemişse özel bir hata mesajı döndür
+            if (e instanceof ConstraintViolationException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            } else if (sehir.getBolge() == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Bolge ID girmek zorunludur.");
+            }
+            // Diğer hatalar için genel hata mesajı döndür
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     //   id ile veri tabanından şehir silmek
-    //   http://localhost:8080/iller/sil/5
+    //   http://localhost:8080/sehirler/sil/5
     //   curl -X DELETE http://localhost:8080/sehirler/sil/6
     @DeleteMapping("/sil/{id}")
     public ResponseEntity<String> deleteSehir(@PathVariable Long id) {
