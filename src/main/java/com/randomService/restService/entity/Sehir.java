@@ -18,8 +18,9 @@ public class Sehir {
 
 
 
-    public void setSehir(String sehir) {
+    public void setSehir(String sehir,Long bolge_id) {
         this.name = sehir;
+        this.bolge.setId(bolge_id);
     }
 
 
