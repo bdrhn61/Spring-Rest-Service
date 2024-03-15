@@ -1,7 +1,9 @@
 package com.randomService.restService.service;
 
+import com.randomService.restService.entity.Bolge;
 import com.randomService.restService.entity.Sehir;
 import com.randomService.restService.repository.SehirRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +43,18 @@ public class SehirService {
         return sehirOptional.orElse(null);
     }
 
-    public Sehir updateSehir(Long id, String yeniSehirAdi) {
-        Sehir sehir = sehirRepository.findById(id).orElse(null);
-        if (sehir != null) {
-            sehir.setSehir(yeniSehirAdi);
+    public Sehir updateSehir(Long id, Sehir updatedSehir ) {
+        Optional<Sehir> optionalSehir = sehirRepository.findById(id);
+
+        if (optionalSehir.isPresent()) {
+            Sehir sehir = optionalSehir.get();
+            sehir.setName(updatedSehir.getName());
+            sehir.setPlaka(updatedSehir.getPlaka());
+            sehir.setBolge(updatedSehir.getBolge());
+
             return sehirRepository.save(sehir);
+        } else {
+            throw new EntityNotFoundException("Sehir kaydı bulunamadı---: " + id);
         }
-        return null;
     }
 }

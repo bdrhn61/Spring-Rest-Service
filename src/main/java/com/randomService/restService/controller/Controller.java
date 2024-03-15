@@ -80,8 +80,8 @@ public class Controller {
     // http://localhost:8080/sehirler/degistir/2?yeniSehirAdi=adana
     // id ile şehir ismini değiştirmek
     @PutMapping("/degistir/{id}")
-    public Sehir updateSehir(@PathVariable Long id, @RequestParam String yeniSehirAdi) {
-        return sehirService.updateSehir(id, yeniSehirAdi);
+    public Sehir updateSehir(@PathVariable Long id,  @RequestBody Sehir updatedSehir) {
+        return sehirService.updateSehir(id, updatedSehir);
     }
 
 //    @GetMapping
