@@ -2,6 +2,7 @@ package com.randomService.restService.service;
 
 import com.randomService.restService.entity.Bolge;
 import com.randomService.restService.entity.Sehir;
+import com.randomService.restService.repository.BolgeRepository;
 import com.randomService.restService.repository.SehirRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,18 @@ import java.util.Optional;
 public class SehirService {
     @Autowired
     SehirRepository sehirRepository;
+    @Autowired
+    BolgeRepository bolgeRepository;
 
 
     public List<Sehir> getService() {
         return sehirRepository.getAllSehir();
+
+
+        //  return sehirRepository.findAll();
+    }
+    public List<Bolge> getBolge() {
+        return bolgeRepository.getAllBolge();
 
 
         //  return sehirRepository.findAll();
@@ -48,13 +57,15 @@ public class SehirService {
 
         if (optionalSehir.isPresent()) {
             Sehir sehir = optionalSehir.get();
-            sehir.setName(updatedSehir.getName());
-            sehir.setPlaka(updatedSehir.getPlaka());
-            sehir.setBolge(updatedSehir.getBolge());
+            sehir.updateSehir(updatedSehir);
 
             return sehirRepository.save(sehir);
         } else {
             throw new EntityNotFoundException("Sehir kaydı bulunamadı---: " + id);
         }
+    }
+
+    public Bolge addBolge(Bolge bolge) {
+        return bolgeRepository.save(bolge);
     }
 }

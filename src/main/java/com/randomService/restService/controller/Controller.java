@@ -1,6 +1,7 @@
 package com.randomService.restService.controller;
 
 
+import com.randomService.restService.entity.Bolge;
 import com.randomService.restService.entity.Sehir;
 
 
@@ -64,6 +65,15 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+    @PostMapping("/bolgeEkle")
+    public ResponseEntity<Bolge> addBolge(@RequestBody Bolge bolge) {
+        Bolge newBolge = sehirService.addBolge(bolge);
+        return new ResponseEntity<>(newBolge, HttpStatus.CREATED);
+    }
+    @GetMapping("/bolge")
+    List<Bolge> getBolge(){
+        return sehirService.getBolge();
+    }
 
     //   id ile veri tabanından şehir silmek
     //   http://localhost:8080/sehirler/sil/5
@@ -84,30 +94,5 @@ public class Controller {
         return sehirService.updateSehir(id, updatedSehir);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Il>> getIller() {
-//
-//
-//        return new ResponseEntity(iller, HttpStatus.OK);
-//    }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> getIl(@PathVariable String id){
-//
-//
-//
-//            int ilId = Integer.parseInt(id);
-//
-//            for (Il il : iller) {
-//                if (il.getNumber().equals(id)) {
-//                    return new ResponseEntity<>(il, HttpStatus.OK);
-//                }
-//            }
-//
-//            return new ResponseEntity<>(id +" numaralı İl bulunamadı.",HttpStatus.BAD_REQUEST);
-//
-//
-//
-//
-//    }
 }

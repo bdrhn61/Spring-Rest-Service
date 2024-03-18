@@ -11,12 +11,18 @@ public class Sehir {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+
     @Column(name ="name")
     private String name;
     @Column(name ="plaka")
     private String plaka;
 
-
+    public void updateSehir(Sehir sehir) {
+        this.name = sehir.name;
+        this.plaka = sehir.plaka;
+        this.bolge = sehir.bolge;
+    }
 
     public void setSehir(String sehir,Long bolge_id) {
         this.name = sehir;
